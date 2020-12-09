@@ -52,5 +52,5 @@ def inf_diagram1(max_utils):
     return max_util_list 
 
     
-inf_diagram1([[1,1,1,1,1], [1]))
+print(inf_diagram1([[1,1,1,1,1], [1]]))
 #main()
