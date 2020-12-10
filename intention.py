@@ -4,23 +4,26 @@ import numpy as np
 #import cairosvg
 
 #JOINT
-# def life_value_distribution(norm, alpha_norm, n, k, e):
-#     if norm == True:
-#         D_T = n*k*e
-#     else:
-#         D_T = alpha_norm*k*e
-#     return D_T
+def life_value(norm, alpha_norm, n, k):
+    if norm == True:
+        D_T = n*k*np.random.exponential()
+    else:
+        D_T = alpha_norm*k*np.random.exponential()
+    return D_T
 
-from scipy.stats import rv_discrete
-class life_value(rv_discrete):
-     "Life value distribution"
-     def _pmf(self, norm, alpha, alpha_norm, n, k):
-        if norm == True:
-            return n*k*np.random.exponential()
-        else:
-            return alpha_norm*k*np.random.exponential()
-value = life_value(name="value")
+print(life_value(True, 0.5, 0.5, 0.5))
 
+# from scipy.stats import rv_discrete
+# class life_value(rv_discrete):
+#      "Life value distribution"
+#      def _pmf(self, norm, alpha, alpha_norm, n, k):
+#         if norm == True:
+#             return n*k*np.random.exponential()
+#         else:
+#             return alpha_norm*k*np.random.exponential()
+# #value = life_value(name="value")
+# value= life_value()
+# value.rvs(True, 0.5, 0.5, 0.5, 0.5)
 
 #INTENTION
 def max_util(utils):
