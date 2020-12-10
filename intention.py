@@ -137,6 +137,14 @@ def inf_diagram2(utils):
     print(dijkstra.get_distance(choice))
     print(dijkstra.get_path(choice))
 
-
+#for the classic trolly problem
 inf_diagram2([[1,1,1,1,1],[1]])
 # inf_diagram1()
+
+#other trolly problems here, note what each variation is with a comment
+
+
+
+
+
+#graph!
