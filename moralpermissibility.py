@@ -30,3 +30,4 @@ def full_permissibility(w, p_harm, lives_lost, lives_saved):
     
     
 print(full_permissibility(0.5, 0.5, 5, 8))
+print(full_permissibility(0.5, 0.5, 5, 8))
