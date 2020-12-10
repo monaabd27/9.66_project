@@ -1,6 +1,25 @@
 import pyAgrum as gum
 import pyAgrum.lib.notebook as gnb
+import numpy as np
 #import cairosvg
+
+#JOINT
+# def life_value_distribution(norm, alpha_norm, n, k, e):
+#     if norm == True:
+#         D_T = n*k*e
+#     else:
+#         D_T = alpha_norm*k*e
+#     return D_T
+
+from scipy.stats import rv_discrete
+class life_value(rv_discrete):
+     "Life value distribution"
+     def _pmf(self, norm, alpha, alpha_norm, n, k):
+        if norm == True:
+            return n*k*np.random.exponential()
+        else:
+            return alpha_norm*k*np.random.exponential()
+value = life_value(name="value")
 
 
 #INTENTION
