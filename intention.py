@@ -51,6 +51,11 @@ def inf_diagram1(max_utils):
             max_util_list = option
     return max_util_list 
 
-    
+
+
+
 print(inf_diagram1([[1,1,1,1,1], [1]]))
+
+
+
 #main()
