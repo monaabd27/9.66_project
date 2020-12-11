@@ -278,6 +278,97 @@ def inf_diagramBv5():
     print(dijkstra.get_path(choice))
 
 
+def inf_diagram1v5_Side():
+    #method using a graph, this is definition 2 of intention in the paper
+    #1 person on main track, 5 people on side track, and then the side-side track that saves everyone
+    #this is presented in the paper, but not tested with subjects
+    graph = Graph()
+    start = "throw_A"
+    end1 = "util1"
+    end2 = "util2to6"
+    end3 = "Side Side"
+    choice = "end result"
+    graph.add_edge(start, end1, -1)
+    graph.add_edge(start, end2, -5)
+    graph.add_edge(end2, end3, -1)
+    graph.add_edge(end2, choice, 0)
+    graph.add_edge(end3, choice, 0)
+    graph.add_edge(end1, choice, 0)
+    dijkstra = DijkstraSPF(graph, start)
+    print(dijkstra.get_distance(choice)*-1)
+    print(dijkstra.get_path(choice))
+
+#NEW SCENARIOS
+
+def inf_diagram1v5_Mixed():
+    #method using a graph, this is definition 2 of intention in the paper
+    #1 person on main track, 5 people on side track
+    #th 1 person is a doctor, other 5 are murderers
+    graph = Graph()
+    start = "throw_A"
+    end1 = "Doctor"
+    end2 = "Murderers"
+    choice = "end result"
+    graph.add_edge(start, end1, -10)
+    graph.add_edge(start, end2, -2.5)
+    graph.add_edge(end2, choice, 0)
+    graph.add_edge(end1, choice, 0)
+    dijkstra = DijkstraSPF(graph, start)
+    print(dijkstra.get_distance(choice)*-1)
+    print(dijkstra.get_path(choice))
+
+def inf_diagram5v1_Mixed():
+    #method using a graph, this is definition 2 of intention in the paper
+    #5  on main track, 1 on side track
+    #th 1 person is a doctor, other 5 are murderers
+    graph = Graph()
+    start = "throw_A"
+    end1 = "Murderers"
+    end2 = "Doctor"
+    choice = "end result"
+    graph.add_edge(start, end2, -10)
+    graph.add_edge(start, end1, -2.5)
+    graph.add_edge(end2, choice, 0)
+    graph.add_edge(end1, choice, 0)
+    dijkstra = DijkstraSPF(graph, start)
+    print(dijkstra.get_distance(choice)*-1)
+    print(dijkstra.get_path(choice))
+
+
+def inf_diagram5v5_Mixed():
+    #method using a graph, this is definition 2 of intention in the paper
+    #5  on main track, 5 on side track
+    #th 5 person is a doctor, other 5 are murderers, murderers on main traick
+    graph = Graph()
+    start = "throw_A"
+    end1 = "Murderers"
+    end2 = "Doctors"
+    choice = "end result"
+    graph.add_edge(start, end2, -10)
+    graph.add_edge(start, end1, -2.5)
+    graph.add_edge(end2, choice, 0)
+    graph.add_edge(end1, choice, 0)
+    dijkstra = DijkstraSPF(graph, start)
+    print(dijkstra.get_distance(choice)*-1)
+    print(dijkstra.get_path(choice))
+
+def inf_diagram5v5_Mixed_Switch():
+    #method using a graph, this is definition 2 of intention in the paper
+    #5  on main track, 5 on side track
+    #th 5 person is a doctor, other 5 are murderers, murderers on side track
+    graph = Graph()
+    start = "throw_A"
+    end1 = "Doctors"
+    end2 = "Murders"
+    choice = "end result"
+    graph.add_edge(start, end1, -10)
+    graph.add_edge(start, end2, -2.5)
+    graph.add_edge(end2, choice, 0)
+    graph.add_edge(end1, choice, 0)
+    dijkstra = DijkstraSPF(graph, start)
+    print(dijkstra.get_distance(choice)*-1)
+    print(dijkstra.get_path(choice))
+
 #for the classic trolly problem (5 on main, 1 on side track)
 inf_diagram5v1()
 
