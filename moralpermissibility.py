@@ -22,7 +22,7 @@ def utility_permissibility(lives_lost, lives_saved, alpha_1 =0.3, alpha_2=0):
     delta_lives = lives_lost - lives_saved
     return logit(delta_lives, alpha_1, alpha_2)
 
-def full_permissibility(w, p_harm, lives_lost, lives_saved):
+def full_permissibility(p_harm, lives_lost, lives_saved, w= 0.8):
     per_intention = intention_permissibility(p_harm)
     per_utility = utility_permissibility(lives_lost, lives_saved)
     per_full = w*per_intention + (1-w)*per_utility

@@ -2,15 +2,6 @@ import pyAgrum as gum
 import pyAgrum.lib.notebook as gnb
 from dijkstra import DijkstraSPF, Graph
 import numpy as np
-#import cairosvg
-
-#JOINT
-def life_value(norm, alpha_norm, n, k):
-    if norm == True:
-        D_T = n*k*np.random.exponential()
-    else:
-        D_T = alpha_norm*k*np.random.exponential()
-    return D_T
 
 #the way the norms impact is thru the utility
 #for a given desire and norm we have our utility, 
@@ -27,7 +18,40 @@ def life_value(norm, alpha_norm, n, k):
 #we jsut use their parameters
 #run mini experiments on ppl and then fit the model
 
-#print(life_value(True, 0.5, 0.5, 0.5))
+#JOINT
+def life_value(norm, k, n = 1, alpha_bro = 30):
+    """
+    inputs: 
+    norm (bool): if we are following the norm that loved ones
+    are more valued, norm = True.
+    
+    alpha_bro: norm when family is seen more valuable. 
+    the brother is see as equal to alpha_norm number of ppl
+
+    n: norm when all people are seen as equal
+
+    k = -1 if they want to kill the people on the track, 1 overwise
+    
+    Returns: D_T: utility of the people on the track not being killed
+    """
+    if not norm:
+        D_T = n*k*np.random.exponential()
+    else:
+        D_T = alpha_bro*k*np.random.exponential()
+    return D_T
+
+#print(life_value(True, 2, 0.5, 1))
+def desire_util(n_saved, n_killed, bro, a_k = 0.05, a_b = 0.1, a_norm = 0.55):
+    """
+    a_b : prob that the agent wants to kill as many people as possible
+    
+    a_k: prob that they want to kill the people on the track, 
+    independent for each track
+    
+    a_norm: prob that they follow the norm
+    """
+    #utility of the people on the track not being killed
+    pass
 
 # from scipy.stats import rv_discrete
 # class life_value(rv_discrete):
