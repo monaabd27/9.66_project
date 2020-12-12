@@ -41,7 +41,7 @@ def life_value(norm, k, n = 1, alpha_bro = 30):
     return D_T
 
 #print(life_value(True, 2, 0.5, 1))
-def desire_util(n_saved, n_killed, bro, a_k = 0.05, a_b = 0.1, a_norm = 0.55):
+def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55):
     """
     a_b : prob that the agent wants to kill as many people as possible
     
@@ -51,6 +51,10 @@ def desire_util(n_saved, n_killed, bro, a_k = 0.05, a_b = 0.1, a_norm = 0.55):
     a_norm: prob that they follow the norm
     """
     #utility of the people on the track not being killed
+    pass
+    #return D_T, and intention?
+
+def sample_P_I(action_done, action_sample):
     pass
 
 # from scipy.stats import rv_discrete
