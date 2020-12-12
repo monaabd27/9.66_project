@@ -19,7 +19,7 @@ import numpy as np
 #run mini experiments on ppl and then fit the model
 
 #JOINT
-def life_value(norm, k, n = 1, alpha_bro = 30):
+def life_value(norm, k, n_T = 1, alpha_bro = 30):
     """
     inputs: 
     norm (bool): if we are following the norm that loved ones
@@ -35,13 +35,14 @@ def life_value(norm, k, n = 1, alpha_bro = 30):
     Returns: D_T: utility of the people on the track not being killed
     """
     if not norm:
-        D_T = n*k*np.random.exponential()
+        D_T = n_T*k*np.random.exponential()
     else:
         D_T = alpha_bro*k*np.random.exponential()
     return D_T
 
 #print(life_value(True, 2, 0.5, 1))
-def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55):
+
+def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1):
     """
     a_b : prob that the agent wants to kill as many people as possible
     
@@ -50,9 +51,28 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55):
     
     a_norm: prob that they follow the norm
     """
-    #utility of the people on the track not being killed
-    pass
-    #return D_T, and intention?
+    samples = []
+    for i in range(0, 100):
+        a_b = np.random.uniform(0,100)
+        if a_b < 10:
+            k = -1
+        else:
+            a_k = np.random.uniform(0,100)
+            if a_k < 5:
+                k = -1
+            else:
+                k=1
+        a_norm = np.random.uniform(0,100)
+        if a_norm < 55:
+            norm = True
+        else:
+            norm = False
+        life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30), life_value(norm, k, n_T = n_S, alpha_bro = 30))
+        samples.append(life_val)
+    return samples
+
+#utility of people not being killed on main track
+print(sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S=5))
 
 def sample_P_I(action_done, action_sample):
     pass
