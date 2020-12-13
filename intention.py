@@ -19,7 +19,7 @@ import numpy as np
 #run mini experiments on ppl and then fit the model
 
 #JOINT
-def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 10):
+def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 30):
     """
     inputs: 
     norm (bool): if we are following the norm that loved ones
@@ -110,7 +110,7 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True
         else:
             norm = False
         
-        life_val = (life_value_5(norm, k, n_T = n_M, alpha_bro = 10, reg=reg), life_value_5(norm, k, n_T = n_S, alpha_bro = 10, reg=reg))
+        life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30, reg=reg), life_value(norm, k, n_T = n_S, alpha_bro = 30, reg=reg))
         m = max(life_val, key = abs)
         
         if k == -1:
@@ -126,10 +126,10 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True
 
         if n_M == "B":
             bro_loc = "main"
-            samples.append((l, k, bro_loc))
+            samples.append((l, k, bro_loc, n_M, n_S))
         elif n_S == "B":
             bro_loc = "side"
-            samples.append((l, k, bro_loc))
+            samples.append((l, k, bro_loc, n_M, n_S))
         else:
             samples.append((l, k))
         
@@ -138,7 +138,46 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True
 
 #utility of people not being killed on main track
 
-def sample_P_I(action_done, action_samples):
+def sample_P_norm(action_done, action_samples):
+    num_norm = 0
+    num_total_samps = 0
+    for samp in action_samples:
+        if samp[0] == action_done:
+            num_total_samps += 1
+            if samp[3] == 5:
+                lives_saved  = 5
+            if samp[3] == 2:
+                lives_saved  = 2
+            if samp[3] == 1:
+                lives_saved  = 1
+            if samp[3] == "B":
+                lives_saved = 1
+            if samp[4] == 5:
+                lives_lost = 5
+            if samp[4] == 2:
+                lives_lost  = 2
+            if samp[4] == 1:
+                lives_lost  = 1
+            if samp[4] == "B":
+                lives_lost = 1 
+            net = lives_saved - lives_lost
+            if samp[1] == -1:
+                if net > 0:
+                    num_norm += 1
+            if samp[1] == 1:
+                if net < 0:
+                    num_norm += 1
+            if net == 0:
+                if samp[1] == 1:
+                    if samp[3] =="B":
+                        num_norm += 1
+                if samp[1] == -1:
+                    if samp[4] =="B":
+                        num_norm += 1
+                
+    return num_norm/num_total_samps
+
+def sample_P_I(action_done, action_samples):   
     num_i_kill = 0
     num_total_samps = 0
     for samp in action_samples:
@@ -150,7 +189,7 @@ def sample_P_I(action_done, action_samples):
 
 
 for i in range(1, 11):
-    print(sample_P_I(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 5, n_S= "B", reg=False)))
+    print(sample_P_norm(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = "B", n_S= 5, reg=False)))
     #action true means that the lever was pulled, so side track ppl were killled
 
 
