@@ -19,7 +19,7 @@ import numpy as np
 #run mini experiments on ppl and then fit the model
 
 #JOINT
-def life_value(norm, k, n_T = 1, alpha_bro = 30):
+def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 30):
     """
     inputs: 
     norm (bool): if we are following the norm that loved ones
@@ -34,7 +34,7 @@ def life_value(norm, k, n_T = 1, alpha_bro = 30):
     
     Returns: D_T: utility of the people on the track not being killed
     """
-    if not norm:
+    if not norm or reg == True:
         D_T = n_T*k*np.random.exponential()
     else:
         D_T = alpha_bro*k*np.random.exponential()
@@ -42,7 +42,7 @@ def life_value(norm, k, n_T = 1, alpha_bro = 30):
 
 #print(life_value(True, 2, 0.5, 1))
 
-def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1):
+def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True):
     """
     a_b : prob that the agent wants to kill as many people as possible
     
@@ -67,7 +67,7 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1):
             norm = True
         else:
             norm = False
-        life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30), life_value(norm, k, n_T = n_S, alpha_bro = 30))
+        life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30, reg=reg), life_value(norm, k, n_T = n_S, alpha_bro = 30, reg=reg))
         m = max(life_val, key = abs)
         if k == -1:
             if m == life_val[0]:
@@ -97,7 +97,8 @@ def sample_P_I(action_done, action_samples):
     return num_i_kill/num_total_samps
 
 
-print(sample_P_I(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S=5)))
+for i in range(1, 11):
+    print(sample_P_I(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S=1, reg=False)))
     #action true means that the lever was pulled, so side track ppl were killled
 
 
