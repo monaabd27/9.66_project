@@ -68,26 +68,38 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1):
         else:
             norm = False
         life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30), life_value(norm, k, n_T = n_S, alpha_bro = 30))
-        samples.append(life_val)
+        m = max(life_val, key = abs)
+        if k == -1:
+            if m == life_val[0]:
+                l = False
+            else:
+                l = True
+        else:
+            if m == life_val[0]:
+                l = True
+            else:
+                l = False
+        samples.append((l, k))
+
     return samples
 
 #utility of people not being killed on main track
-print(sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S=5))
 
-def sample_P_I(action_done, action_sample):
-    pass
 
-# from scipy.stats import rv_discrete
-# class life_value(rv_discrete):
-#      "Life value distribution"
-#      def _pmf(self, norm, alpha, alpha_norm, n, k):
-#         if norm == True:
-#             return n*k*np.random.exponential()
-#         else:
-#             return alpha_norm*k*np.random.exponential()
-# #value = life_value(name="value")
-# value= life_value()
-# value.rvs(True, 0.5, 0.5, 0.5, 0.5)
+def sample_P_I(action_done, action_samples):
+    num_i_kill = 0
+    num_total_samps = 0
+    for samp in action_samples:
+        if samp[0] == action_done:
+            num_total_samps += 1
+            if samp[1] == -1:
+                num_i_kill += 1
+    return num_i_kill/num_total_samps
+
+
+print(sample_P_I(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S=5)))
+    #action true means that the lever was pulled, so side track ppl were killled
+
 
 #INTENTION
 def max_util(utils):
