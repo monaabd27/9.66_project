@@ -1,14 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-p_ap_mean = [0.033821777, 0.255182789, 0.082900495, 0.277950774, 0.162973162, 0.30249444, 0.067307358, 0.243347983, 0.076269175, 0.086840784, 0.242906794, 0.444233919, 0.081700562]
-s_ap_mean = [0.12, 0.16, 0.12, 0.16, 0.48, 0.56, 0.16, 0.4, 0.16, 0.52, 0.2, 0.4, 0.24]
+p_ap_mean = [0.033821777, 0.255182789, 0.082900495, 0.277950774, 0.162973162, 0.30249444, 0.067307358, 0.243347983, 0.076269175, 0.086840784, 0.204990352, 0.444233919, 0.081700562, 0.088174532, 0.272055431]
+s_ap_mean = [0.12, 0.16, 0.12, 0.16, 0.48, 0.56, 0.16, 0.4, 0.16, 0.52, 0.2, 0.4, 0.24, 0.16, 0.4]
 # Set position of bar on X axis
 barWidth = 0.1
 r1 = np.arange(len(p_ap_mean))
 r2 = [x + barWidth for x in r1]
 r3 = [x + barWidth for x in r2]
-bands =  ["5v1", "5vB", "2v1", "2vB", "1v1", "1vB", "Bv1", "1v2", "Bv2", "Dv5Murd", "5MurdvD", "1v5", "Bv5"]
+bands =  ["5v1", "5vB", "2v1", "2vB", "1v1", "1vB", "Bv1", "1v2", "Bv2", "Dv5Murd", "5MurdvD", "1v5", "Bv5", "5Dv5Murd", "5Murdv5D"]
 # Make the plot
 plt.bar(r1, p_ap_mean, width=barWidth, edgecolor='white', label='Model')
 plt.bar(r2, s_ap_mean, width=barWidth, edgecolor='white', label='Human Data')
