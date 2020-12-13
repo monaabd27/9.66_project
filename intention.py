@@ -19,7 +19,7 @@ import numpy as np
 #run mini experiments on ppl and then fit the model
 
 #JOINT
-def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 1.5):
+def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 10):
     """
     inputs: 
     norm (bool): if we are following the norm that loved ones
@@ -38,6 +38,27 @@ def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 1.5):
         D_T = n_T*k*np.random.exponential()
     else:
         D_T = alpha_bro*k*np.random.exponential()
+    return D_T
+
+def life_value_5(norm, k, n_T = 1, reg = True, alpha_bro = 1.5):
+    """
+    inputs: 
+    norm (bool): if we are following the norm that loved ones
+    are more valued, norm = True.
+    
+    alpha_bro: norm when family is seen more valuable. 
+    the brother is see as equal to alpha_norm number of ppl
+
+    n: norm when all people are seen as equal
+
+    k = -1 if they want to kill the people on the track, 1 overwise
+    
+    Returns: D_T: utility of the people on the track not being killed
+    """
+    if (not norm or reg == True) and n_T != "B":
+        D_T = n_T*k*np.random.exponential()
+    else:
+        D_T = 5*alpha_bro*k*np.random.exponential()
     return D_T
 
 # def life_value_mixed(norm, k, n_T = 1, reg = True, alpha_doc = 10):
@@ -89,7 +110,7 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True
         else:
             norm = False
         
-        life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30, reg=reg), life_value(norm, k, n_T = n_S, alpha_bro = 30, reg=reg))
+        life_val = (life_value_5(norm, k, n_T = n_M, alpha_bro = 10, reg=reg), life_value_5(norm, k, n_T = n_S, alpha_bro = 10, reg=reg))
         m = max(life_val, key = abs)
         
         if k == -1:
@@ -129,7 +150,7 @@ def sample_P_I(action_done, action_samples):
 
 
 for i in range(1, 11):
-    print(sample_P_I(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 5, n_S="B", reg=False)))
+    print(sample_P_I(True, sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 5, n_S= "B", reg=False)))
     #action true means that the lever was pulled, so side track ppl were killled
 
 
