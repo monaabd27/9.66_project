@@ -34,7 +34,7 @@ def life_value(norm, k, n_T = 1, reg = True, alpha_bro = 30):
     
     Returns: D_T: utility of the people on the track not being killed
     """
-    if not norm or reg == True:
+    if (not norm or reg == True) and n_T != "B":
         D_T = n_T*k*np.random.exponential()
     else:
         D_T = alpha_bro*k*np.random.exponential()
@@ -67,8 +67,10 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True
             norm = True
         else:
             norm = False
+        
         life_val = (life_value(norm, k, n_T = n_M, alpha_bro = 30, reg=reg), life_value(norm, k, n_T = n_S, alpha_bro = 30, reg=reg))
         m = max(life_val, key = abs)
+        
         if k == -1:
             if m == life_val[0]:
                 l = False
@@ -79,7 +81,12 @@ def sample_P_DN(a_k = 0.05, a_b = 0.1, a_norm = 0.55, n_M = 1, n_S = 1, reg=True
                 l = True
             else:
                 l = False
-        samples.append((l, k))
+
+        if n_M == "B":
+            bro_loc = "main"
+        elif n_S == "B":
+            bro_loc = "side"
+        samples.append((l, k, bro_loc))
 
     return samples
 
