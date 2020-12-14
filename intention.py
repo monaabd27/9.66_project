@@ -266,6 +266,26 @@ def inf_diagram5v1():
     print(dijkstra.get_distance(choice)*-1)
     print(dijkstra.get_path(choice))
 
+
+def inf_diagram5v1_loop():
+    #method using a graph, this is definition 2 of intention in the paper
+    #classic trolley problem
+    #this is the special case of the loop track
+    graph = Graph()
+    start = "throw_A"
+    end1 = "util1to5"
+    end2 = "util6"
+    mid = "hurt6"
+    choice = "end result"
+    graph.add_edge(start, end1, -5)
+    graph.add_edge(start, mid, -1)
+    graph.add_edge(mid, end2, 0)
+    graph.add_edge(end2, choice, 0)
+    graph.add_edge(end1, choice, 0)
+    dijkstra = DijkstraSPF(graph, start)
+    print(dijkstra.get_distance(choice)*-1)
+    print(dijkstra.get_path(choice))
+
 def inf_diagram5vB():
     #method using a graph, this is definition 2 of intention in the paper
     #classic trolley problem, but with a brother instead of 1 person
